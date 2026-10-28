@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <meta name="description"
+          content="ORBIT IT Asset Management Dashboard">
+
+    <title>ORBIT | IT Asset Management</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">O</div>
+
+            <div>
+                <h2>ORBIT</h2>
+                <small>ASSET MANAGEMENT</small>
+            </div>
+        </div>
+
+        <p class="menu-label">WORKSPACE</p>
+
+        <nav>
+            <a href="#dashboard" class="nav-link active">
+                ▦ Overview
+            </a>
+
+            <a href="#inventory" class="nav-link">
+                ▣ Asset Inventory
+            </a>
+
+            <a href="#activity" class="nav-link">
+                ◷ Activity Log
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status-dot"></span>
+            Inventory System Online
+        </div>
+    </aside>
+
+
+    <main class="main-content" id="dashboard">
+
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">IT OPERATIONS / ASSET CONTROL</p>
+
+                <h1>Asset Overview</h1>
+
+                <p class="subtitle">
+                    Monitor and manage your IT infrastructure assets.
+                </p>
+            </div>
+
+            <button class="primary-button" id="addAssetBtn">
+                + Register Asset
+            </button>
+        </header>
+
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <p>Total Assets</p>
+                <h2 id="totalAssets">0</h2>
+                <span>Registered devices</span>
+            </article>
+
+            <article class="stat-card">
+                <p>In Use</p>
+                <h2 id="inUseAssets">0</h2>
+                <span>Currently assigned</span>
+            </article>
+
+            <article class="stat-card">
+                <p>Available</p>
+                <h2 id="availableAssets">0</h2>
+                <span>Ready for assignment</span>
+            </article>
+
+            <article class="stat-card">
+                <p>Maintenance</p>
+                <h2 id="maintenanceAssets">0</h2>
+                <span>Under maintenance</span>
+            </article>
+
+        </section>
+
+
+        <section class="panel" id="inventory">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Asset Inventory</h2>
+                    <p>Registered hardware and equipment.</p>
+                </div>
+
+                <button class="secondary-button" id="exportBtn">
+                    Export CSV
+                </button>
+            </div>
+
+
+            <div class="toolbar">
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search asset, user, or serial number..."
+                    aria-label="Search assets"
+                >
+
+                <select id="categoryFilter" aria-label="Filter category">
+                    <option value="">All Categories</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Desktop">Desktop</option>
+                    <option value="Monitor">Monitor</option>
+                    <option value="Network">Network</option>
+                    <option value="Printer">Printer</option>
+                    <option value="Server">Server</option>
+                </select>
+
+                <select id="statusFilter" aria-label="Filter status">
+                    <option value="">All Statuses</option>
+                    <option value="In Use">In Use</option>
+                    <option value="Available">Available</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Retired">Retired</option>
+                </select>
+
+            </div>
+
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset ID</th>
+                            <th>Device</th>
+                            <th>Category</th>
+                            <th>Assigned To</th>
+                            <th>Condition</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="assetTable"></tbody>
+                </table>
+            </div>
+
+            <p class="table-note" id="resultCount"></p>
+
+        </section>
+
+
+        <section class="panel" id="activity">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Recent Activity</h2>
+                    <p>Latest asset management events.</p>
+                </div>
+            </div>
+
+            <div id="activityList" class="activity-list"></div>
+
+        </section>
+
+
+        <footer>
+            ORBIT IT Asset Management · Portfolio Demonstration
+        </footer>
+
+    </main>
+
+
+    <dialog id="assetDialog">
+
+        <form id="assetForm">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Register Asset</h2>
+                    <p>Add a device to the inventory.</p>
+                </div>
+
+                <button
+                    type="button"
+                    id="closeDialogBtn"
+                    class="close-button"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </div>
+
+
+            <label for="assetName">Device Name</label>
+            <input
+                id="assetName"
+                name="assetName"
+                required
+                maxlength="100"
+                placeholder="e.g. Lenovo ThinkPad E14"
+            >
+
+
+            <label for="assetCategory">Category</label>
+            <select id="assetCategory" name="category" required>
+                <option value="Laptop">Laptop</option>
+                <option value="Desktop">Desktop</option>
+                <option value="Monitor">Monitor</option>
+                <option value="Network">Network</option>
+                <option value="Printer">Printer</option>
+                <option value="Server">Server</option>
+            </select>
+
+
+            <label for="assetSerial">Serial Number</label>
+            <input
+                id="assetSerial"
+                name="serial"
+                required
+                maxlength="80"
+                placeholder="e.g. DEMO-SN-1001"
+            >
+
+
+            <label for="assetUser">Assigned To</label>
+            <input
+                id="assetUser"
+                name="assignedTo"
+                maxlength="80"
+                placeholder="Leave blank if unassigned"
+            >
+
+
+            <label for="assetCondition">Condition</label>
+            <select id="assetCondition" name="condition">
+                <option>Good</option>
+                <option>Fair</option>
+                <option>Needs Repair</option>
+            </select>
+
+
+            <label for="assetStatus">Status</label>
+            <select id="assetStatus" name="status">
+                <option>Available</option>
+                <option>In Use</option>
+                <option>Maintenance</option>
+                <option>Retired</option>
+            </select>
+
+
+            <div class="form-actions">
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="cancelDialogBtn"
+                >
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-button">
+                    Save Asset
+                </button>
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <script src="assets/js/app.js"></script>
+
+</body>
+</html>
